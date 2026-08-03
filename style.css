@@ -29,19 +29,19 @@ body {
     padding: 2rem 0;
 }
 
-/* Интерактивный свет на фоне */
+/* Интерактивный свет на фоне — СИЯНИЕ УВЕЛИЧЕНО */
 .cursor-glow {
     position: fixed;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(255,107,0,0.1) 0%, rgba(255,107,0,0) 70%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255,107,0,0.2) 0%, rgba(255,107,0,0) 70%);
     border-radius: 50%;
     pointer-events: none;
     transform: translate(-50%, -50%);
     z-index: 1;
 }
 
-/* Внешняя обертка с бегающим огоньком по контуру карточки */
+/* Внешняя обертка — СИЯНИЕ ТЕНИ ЗНАЧИТЕЛЬНО УВЕЛИЧЕНО */
 .card-wrapper {
     position: relative;
     max-width: 450px;
@@ -54,7 +54,10 @@ body {
     transform-style: preserve-3d;
     transform: perspective(1000px);
     transition: transform 0.1s ease-out;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    /* Мощное размытое неоновое свечение вокруг карточки */
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 
+                0 0 40px rgba(255, 107, 0, 0.25), 
+                0 0 80px rgba(255, 107, 0, 0.1);
 }
 
 /* Эффект бегающего огонька по контуру всей карточки */
@@ -196,23 +199,23 @@ h1 {
     z-index: 10;
 }
 
-/* Пульсирующая оранжевая кнопка */
+/* Пульсирующая оранжевая кнопка — КНОПКА И ШРИФТ МЕНЬШЕ, СИЯНИЕ БОЛЬШЕ */
 .btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 8px; /* Уменьшен зазор */
     width: 100%;
     background: transparent;
     color: var(--text-white);
-    padding: 1.1rem;
+    padding: 0.75rem; /* Уменьшены внутренние отступы кнопки */
     text-decoration: none;
     font-family: 'Oswald', sans-serif;
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 0.95rem; /* Уменьшен размер шрифта */
     text-transform: uppercase;
     border: 2px solid var(--primary);
-    border-radius: 14px;
+    border-radius: 10px; /* Сделано чуть изящнее для меньшего размера */
     letter-spacing: 1px;
     position: relative;
     z-index: 20;
@@ -221,10 +224,10 @@ h1 {
     transition: color 0.3s ease, box-shadow 0.3s ease, transform 0.1s, background-color 0.3s ease;
 }
 
-/* Значок качающейся телефонной трубки */
+/* Значок качающейся телефонной трубки — УМЕНЬШЕН */
 .btn svg {
-    width: 20px;
-    height: 20px;
+    width: 16px; /* Уменьшен размер иконки */
+    height: 16px;
     fill: currentColor;
     flex-shrink: 0;
     display: inline-block;
@@ -238,12 +241,17 @@ h1 {
     vertical-align: middle;
 }
 
+/* Анимация пульсации кнопки — СИЯНИЕ ЗНАЧИТЕЛЬНО УВЕЛИЧЕНО */
 @keyframes buttonPulse {
     0% {
-        box-shadow: 0 0 8px rgba(255, 107, 0, 0.2), inset 0 0 6px rgba(255, 107, 0, 0.1);
+        box-shadow: 0 0 15px rgba(255, 107, 0, 0.3), 
+                    0 0 30px rgba(255, 107, 0, 0.15), 
+                    inset 0 0 8px rgba(255, 107, 0, 0.2);
     }
     100% {
-        box-shadow: 0 0 22px rgba(255, 107, 0, 0.55), inset 0 0 14px rgba(255, 107, 0, 0.25);
+        box-shadow: 0 0 35px rgba(255, 107, 0, 0.8), 
+                    0 0 70px rgba(255, 107, 0, 0.4), 
+                    inset 0 0 16px rgba(255, 107, 0, 0.4);
     }
 }
 
@@ -253,16 +261,18 @@ h1 {
     75% { transform: rotate(8deg); }
 }
 
+/* Наведение на кнопку — ИНТЕНСИВНОЕ СВЕЧЕНИЕ */
 .btn:hover {
     color: #000000;
     background-color: var(--primary);
     animation: none;
-    box-shadow: 0 0 35px rgba(255, 107, 0, 0.75), 0 0 12px rgba(255, 107, 0, 0.45);
+    box-shadow: 0 0 45px rgba(255, 107, 0, 0.9), 
+                0 0 90px rgba(255, 107, 0, 0.5);
 }
 
 .btn:hover svg {
     animation: none;
-    transform: scale(1.15) rotate(-15deg);
+    transform: scale(1.1) rotate(-15deg);
 }
 
 .btn:active {
