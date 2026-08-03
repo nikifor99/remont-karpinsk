@@ -1,0 +1,279 @@
+:root {
+    --primary: #ff6b00; /* Трендовый неоново-оранжевый */
+    --bg-dark: #0f1115; /* Глубокий премиальный темный */
+    --card-bg: #161920; /* Цвет самой карточки */
+    --text-white: #f8fafc; /* Чистый белый для контраста */
+    --text-gray: #94a3b8; /* Спокойный серый */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    background-color: var(--bg-dark);
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--text-white);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow-x: hidden;
+    padding: 2rem 0;
+}
+
+/* Интерактивный свет на фоне */
+.cursor-glow {
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255,107,0,0.1) 0%, rgba(255,107,0,0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+/* Внешняя обертка с бегающим огоньком по контуру карточки */
+.card-wrapper {
+    position: relative;
+    max-width: 450px;
+    width: calc(100% - 2rem);
+    margin: auto;
+    padding: 2px; /* Толщина внешнего бегающего контура */
+    border-radius: 26px;
+    overflow: hidden;
+    z-index: 2;
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
+    transition: transform 0.1s ease-out;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Эффект бегающего огонька по контуру всей карточки */
+.card-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        transparent, 
+        rgba(255, 107, 0, 0.1), 
+        var(--primary), 
+        #ffffff, 
+        var(--primary), 
+        rgba(255, 107, 0, 0.1), 
+        transparent 40%
+    );
+    animation: rotateGlow 4s linear infinite;
+    z-index: 1;
+}
+
+/* Сама карточка внутри светящейся обертки */
+.container {
+    position: relative;
+    z-index: 2;
+    padding: 3rem 2.2rem;
+    width: 100%;
+    background: #161920;
+    border-radius: 24px;
+    transform-style: preserve-3d;
+}
+
+/* Рамка вокруг заголовка с бегающим бликом */
+.header-wrapper {
+    margin-bottom: 2.5rem;
+    transform: translateZ(30px);
+    text-align: center;
+    position: relative;
+    padding: 12px 20px;
+    background: rgba(15, 17, 21, 0.6);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.header-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        transparent, 
+        rgba(255, 107, 0, 0.1), 
+        var(--primary), 
+        #ffffff, 
+        var(--primary), 
+        rgba(255, 107, 0, 0.1), 
+        transparent 40%
+    );
+    animation: rotateGlow 3s linear infinite;
+    z-index: 1;
+}
+
+.header-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: #161920;
+    border-radius: 10px;
+    z-index: 2;
+}
+
+@keyframes rotateGlow {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Переливающийся текст заголовка */
+h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.1;
+    letter-spacing: 1.5px;
+    background: linear-gradient(90deg, #ffffff, var(--primary), #cbd5e1, #ffffff);
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    z-index: 3;
+    animation: textShimmer 4s linear infinite;
+}
+
+@keyframes textShimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+}
+
+.services-list {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    list-style: none;
+    transform: translateZ(20px);
+}
+
+.services-item {
+    margin-bottom: 1.8rem;
+    position: relative;
+}
+
+.services-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-white);
+    margin-bottom: 4px;
+    transition: color 0.2s ease;
+}
+
+.services-item:hover .services-title {
+    color: var(--primary);
+}
+
+.services-details {
+    font-size: 0.9rem;
+    color: var(--text-gray);
+    line-height: 1.5;
+}
+
+/* Обертка для кнопки замера */
+.btn-wrapper {
+    transform: translateZ(40px);
+    position: relative;
+    z-index: 10;
+}
+
+/* Пульсирующая оранжевая кнопка */
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    background: transparent;
+    color: var(--text-white);
+    padding: 1.1rem;
+    text-decoration: none;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    border: 2px solid var(--primary);
+    border-radius: 14px;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 20;
+    text-align: center;
+    animation: buttonPulse 2s infinite alternate ease-in-out;
+    transition: color 0.3s ease, box-shadow 0.3s ease, transform 0.1s, background-color 0.3s ease;
+}
+
+/* Значок качающейся телефонной трубки */
+.btn svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: middle;
+    animation: phoneWobble 2.5s infinite ease-in-out;
+    transition: transform 0.3s ease;
+}
+
+.btn span {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+@keyframes buttonPulse {
+    0% {
+        box-shadow: 0 0 8px rgba(255, 107, 0, 0.2), inset 0 0 6px rgba(255, 107, 0, 0.1);
+    }
+    100% {
+        box-shadow: 0 0 22px rgba(255, 107, 0, 0.55), inset 0 0 14px rgba(255, 107, 0, 0.25);
+    }
+}
+
+@keyframes phoneWobble {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-8deg); }
+    75% { transform: rotate(8deg); }
+}
+
+.btn:hover {
+    color: #000000;
+    background-color: var(--primary);
+    animation: none;
+    box-shadow: 0 0 35px rgba(255, 107, 0, 0.75), 0 0 12px rgba(255, 107, 0, 0.45);
+}
+
+.btn:hover svg {
+    animation: none;
+    transform: scale(1.15) rotate(-15deg);
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.notice {
+    font-size: 0.8rem;
+    color: var(--text-gray);
+    margin-top: 1.5rem;
+    line-height: 1.5;
+    transform: translateZ(10px);
+    text-align: center;
+}
