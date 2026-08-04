@@ -13,7 +13,7 @@
     <!-- Эффект фонового свечения за курсором -->
     <div class="cursor-glow" id="cursor-glow"></div>
 
-    <!-- Внешняя обертка карточки (авто-кручение настроено в CSS) -->
+    <!-- Внешняя обертка карточки -->
     <div class="card-wrapper" id="card">
         <div class="container">
             
@@ -22,12 +22,11 @@
                 <h1>Ремонт Карпинск</h1>
             </div>
 
-            <!-- Блок видео-слайдера с БЕГУЩИМ ОГОНЬКОМ -->
+            <!-- Блок видео-слайдера с бегущим огоньком -->
             <div class="slider-wrapper">
                 <div class="slider-container">
                     <div class="services-slider">
                         
-                        <!-- Слайд с видео и аккуратной SVG-кнопкой -->
                         <div class="slide active">
                             <div class="video-wrapper">
                                 <video id="card-video" autoplay loop playsinline muted>
@@ -36,7 +35,7 @@
                                 </video>
                             </div>
                             
-                            <!-- Аккуратная тонкая кнопка звука -->
+                            <!-- Кнопка звука -->
                             <button id="mute-btn" class="mute-button" aria-label="Включить звук">
                                 <svg id="mute-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
@@ -50,13 +49,14 @@
                 </div>
             </div>
 
-            <!-- Кнопка вызова на замер -->
+            <!-- КНОПКА ПРЯМОГО ЗВОНКА (Замените на ваш реальный номер телефона) -->
             <div class="btn-wrapper">
-                <a href="#" class="btn">
+                <a href="tel:+79826260959" class="btn">
                     <svg viewBox="0 0 24 24">
                         <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                     </svg>
-                    <span>Вызвать на замер</span>
+                    <!-- Текст внутри тега <span> теперь анимирован через CSS и "печатается" по кругу -->
+                    <span class="typing-text">Вызвать на замер</span>
                 </a>
             </div>
 
@@ -74,16 +74,15 @@
         </div>
     </div>
 
-    <!-- Логика работы страницы -->
     <script>
-        // 1. Движение фонового свечения за курсором
+        // Движение фонового свечения за курсором
         const glow = document.getElementById('cursor-glow');
         document.addEventListener('mousemove', (e) => {
             glow.style.left = e.clientX + 'px';
             glow.style.top = e.clientY + 'px';
         });
 
-        // 2. Управление звуком видео через SVG-иконки
+        // Управление звуком видео через SVG-иконки
         const video = document.getElementById('card-video');
         const muteBtn = document.getElementById('mute-btn');
         const muteSvg = document.getElementById('mute-svg');
@@ -91,6 +90,7 @@
         if (video && muteBtn && muteSvg) {
             muteBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
+                e.preventDefault(); // Защита от ложного срабатывания ссылки
                 if (video.muted) {
                     video.muted = false;
                     muteSvg.innerHTML = `
@@ -98,7 +98,6 @@
                         <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
                         <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
                     `;
-                    muteBtn.setAttribute('aria-label', 'Выключить звук');
                 } else {
                     video.muted = true;
                     muteSvg.innerHTML = `
@@ -106,7 +105,6 @@
                         <line x1="23" y1="9" x2="17" y2="15"></line>
                         <line x1="17" y1="9" x2="23" y2="15"></line>
                     `;
-                    muteBtn.setAttribute('aria-label', 'Включить звук');
                 }
             });
         }
