@@ -29,50 +29,6 @@ body {
     padding: 2rem 0;
 }
 
-/* ===== ПРЕЛОАДЕР ===== */
-.preloader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #0f1115;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    transition: opacity 0.5s ease;
-}
-.preloader-content {
-    text-align: center;
-}
-.spinner {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto 20px;
-    border: 4px solid rgba(255,107,0,0.1);
-    border-top: 4px solid var(--primary);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-@keyframes spin {
-    100% { transform: rotate(360deg); }
-}
-.countdown {
-    font-size: 4rem;
-    font-weight: 700;
-    font-family: 'Oswald', sans-serif;
-    color: var(--primary);
-    text-shadow: 0 0 30px rgba(255,107,0,0.5);
-    line-height: 1;
-    margin-bottom: 10px;
-}
-.preloader-content p {
-    font-size: 1rem;
-    opacity: 0.6;
-    letter-spacing: 2px;
-}
-
 /* ===== ФОНОВЫЙ СВЕТ ===== */
 .cursor-glow {
     position: fixed;
@@ -85,7 +41,7 @@ body {
     z-index: 1;
 }
 
-/* ===== КАРТОЧКА ===== */
+/* ===== КАРТОЧКА С АВТО-КРУЧЕНИЕМ ===== */
 .card-wrapper {
     position: relative;
     max-width: 450px;
@@ -97,14 +53,22 @@ body {
     z-index: 2;
     transform-style: preserve-3d;
     transform: perspective(1000px);
-    transition: transform 0.1s ease-out, opacity 0.8s ease;
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 
                 0 0 40px rgba(255, 107, 0, 0.25), 
                 0 0 80px rgba(255, 107, 0, 0.1);
+    animation: autoRotateCard 6s infinite ease-in-out alternate;
 }
 
+@keyframes autoRotateCard {
+    0% { transform: perspective(1000px) rotateX(-3deg) rotateY(-4deg); }
+    50% { transform: perspective(1000px) rotateX(3deg) rotateY(4deg); }
+    100% { transform: perspective(1000px) rotateX(-3deg) rotateY(4deg); }
+}
+
+/* Общая анимация вращения огоньков */
 .card-wrapper::before,
-.header-wrapper::before {
+.header-wrapper::before,
+.slider-wrapper::before {
     content: '';
     position: absolute;
     top: -50%;
@@ -125,6 +89,7 @@ body {
     will-change: transform;
 }
 .header-wrapper::before { animation-duration: 3s; }
+.slider-wrapper::before { animation-duration: 5s; } /* Скорость огонька вокруг видео */
 
 .container {
     position: relative;
@@ -159,17 +124,27 @@ body {
     z-index: 2;
 }
 
-/* Рамка слайдера (Огонёк убран, добавлена статичная оранжевая кайма) */
+/* ===== ВОЗВРАЩЕН БЕГУЩИЙ ОГОНЕК ДЛЯ ВИДЕО ===== */
 .slider-wrapper {
     width: 100%;
     margin-bottom: 1.8rem;
     text-align: center;
     position: relative;
-    border-radius: 12px;
+    padding: 2px; /* Толщина бегущего огонька */
+    border-radius: 14px;
     overflow: hidden;
     transform: translateZ(25px);
-    border: 1px solid rgba(255, 107, 0, 0.4);
-    box-shadow: 0 0 20px rgba(255, 107, 0, 0.15);
+    box-shadow: 0 0 25px rgba(255, 107, 0, 0.2);
+}
+
+/* Подложка под слайдер, которая перекрывает центр градиента */
+.slider-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: #0f1115;
+    border-radius: 12px;
+    z-index: 2;
 }
 
 @keyframes rotateGlow {
@@ -200,9 +175,11 @@ h1 {
 
 .slider-container {
     position: relative;
-    z-index: 3;
+    z-index: 3; /* Видео поверх внутренней подложки */
     background: #0f1115;
     width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
     padding: 0;
 }
 
@@ -244,30 +221,43 @@ h1 {
     display: block;
 }
 
-/* Кнопка звука в верхнем углу */
+/* Утонченная и аккуратная SVG-кнопка звука */
 .mute-button {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 12px;
+    right: 12px;
     z-index: 10;
-    background: rgba(15, 17, 21, 0.75);
-    border: 1px solid rgba(255, 107, 0, 0.4);
-    color: #fff;
-    font-size: 1.1rem;
-    width: 36px;
-    height: 36px;
+    background: rgba(15, 17, 21, 0.6);
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    color: rgba(255, 255, 255, 0.8);
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
-    backdrop-filter: blur(4px);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(6px);
+    padding: 0;
 }
+
+.mute-button svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+}
+
 .mute-button:hover {
-    transform: scale(1.1);
+    transform: scale(1.08);
     background: var(--primary);
-    border-color: #fff;
+    border-color: #ffffff;
+    color: #000000;
+    box-shadow: 0 0 15px var(--primary);
+}
+
+.mute-button:active {
+    transform: scale(0.95);
 }
 
 /* ===== КНОПКА ЗАМЕРА ===== */
@@ -330,7 +320,7 @@ h1 {
 .btn:hover svg { animation: none; transform: scale(1.1) rotate(-15deg); }
 .btn:active { transform: scale(0.97); }
 
-/* ===== БЕГУЩАЯ СТРОКА ===== */
+/* ===== БЕКУЩАЯ СТРОКА ===== */
 .ticker-wrapper {
     width: 100%;
     overflow: hidden;
