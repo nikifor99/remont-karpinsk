@@ -102,9 +102,9 @@ body {
                 0 0 40px rgba(255, 107, 0, 0.25), 
                 0 0 80px rgba(255, 107, 0, 0.1);
 }
+
 .card-wrapper::before,
-.header-wrapper::before,
-.slider-wrapper::before {
+.header-wrapper::before {
     content: '';
     position: absolute;
     top: -50%;
@@ -125,7 +125,6 @@ body {
     will-change: transform;
 }
 .header-wrapper::before { animation-duration: 3s; }
-.slider-wrapper::before { animation-duration: 3.5s; }
 
 .container {
     position: relative;
@@ -140,8 +139,7 @@ body {
     align-items: center;
 }
 
-.header-wrapper,
-.slider-wrapper {
+.header-wrapper {
     width: 100%;
     margin-bottom: 2rem;
     text-align: center;
@@ -149,18 +147,29 @@ body {
     padding: 2px;
     border-radius: 12px;
     overflow: hidden;
+    transform: translateZ(30px);
 }
-.header-wrapper { transform: translateZ(30px); }
-.slider-wrapper { transform: translateZ(25px); margin-bottom: 1.8rem; }
 
-.header-wrapper::after,
-.slider-wrapper::after {
+.header-wrapper::after {
     content: '';
     position: absolute;
     inset: 2px;
     background: #161920;
     border-radius: 10px;
     z-index: 2;
+}
+
+/* Рамка слайдера (Огонёк убран, добавлена статичная оранжевая кайма) */
+.slider-wrapper {
+    width: 100%;
+    margin-bottom: 1.8rem;
+    text-align: center;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    transform: translateZ(25px);
+    border: 1px solid rgba(255, 107, 0, 0.4);
+    box-shadow: 0 0 20px rgba(255, 107, 0, 0.15);
 }
 
 @keyframes rotateGlow {
@@ -193,17 +202,15 @@ h1 {
     position: relative;
     z-index: 3;
     background: #0f1115;
-    border-radius: 10px;
-    padding: 1.2rem;
     width: 100%;
+    padding: 0;
 }
 
 .services-slider {
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: 220px;
-    border-radius: 6px;
+    height: 240px;
 }
 
 .slide {
@@ -214,21 +221,20 @@ h1 {
     height: 100%;
     display: none;
     opacity: 0;
-    transform: scale(0.98);
-    transition: opacity 0.35s ease-in-out, transform 0.35s ease-in-out;
+    transition: opacity 0.35s ease-in-out;
 }
 .slide.active {
     position: relative;
     display: block;
+    opacity: 1;
 }
 
-/* ===== ВИДЕО-ОБЁРТКА ===== */
+/* ===== СТИЛИ ДЛЯ ВИДЕО ПЛЕЕРА ===== */
 .video-wrapper {
     position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    border-radius: 6px;
     background: #000;
 }
 .video-wrapper video {
@@ -238,79 +244,30 @@ h1 {
     display: block;
 }
 
-/* Таймер 3,2,1 */
-.video-timer {
+/* Кнопка звука в верхнем углу */
+.mute-button {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: none;
+    top: 15px;
+    right: 15px;
+    z-index: 10;
+    background: rgba(15, 17, 21, 0.75);
+    border: 1px solid rgba(255, 107, 0, 0.4);
+    color: #fff;
+    font-size: 1.1rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Oswald', sans-serif;
-    font-size: 6rem;
-    font-weight: 700;
-    color: #ffffff;
-    text-shadow: 0 0 40px rgba(255,107,0,0.8), 0 0 80px rgba(255,107,0,0.5);
-    background: rgba(0,0,0,0.3);
-    backdrop-filter: blur(2px);
-    z-index: 10;
-    pointer-events: none;
-    animation: timerPulse 0.8s ease-in-out infinite alternate;
-}
-@keyframes timerPulse {
-    0% { transform: scale(1); opacity: 0.8; }
-    100% { transform: scale(1.1); opacity: 1; }
-}
-
-/* Надпись "Наши работы" */
-.video-label {
-    position: absolute;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: rgba(255,255,255,0.7);
-    text-shadow: 0 0 20px rgba(0,0,0,0.8);
-    background: rgba(0,0,0,0.4);
-    padding: 4px 14px;
-    border-radius: 20px;
+    transition: all 0.2s ease;
     backdrop-filter: blur(4px);
-    z-index: 5;
-    border: 1px solid rgba(255,255,255,0.1);
 }
-
-/* Кнопка "Нажмите для воспроизведения" */
-.play-btn {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 20;
-    display: none;
-    background: rgba(0,0,0,0.7);
-    border: 2px solid rgba(255,107,0,0.8);
-    color: #fff;
-    font-family: 'Oswald', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    padding: 12px 28px;
-    border-radius: 40px;
-    cursor: pointer;
-    box-shadow: 0 0 30px rgba(255,107,0,0.4);
-    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-    letter-spacing: 1px;
-}
-.play-btn:hover {
-    transform: translate(-50%, -50%) scale(1.05);
+.mute-button:hover {
+    transform: scale(1.1);
     background: var(--primary);
-    color: #000;
-    box-shadow: 0 0 50px rgba(255,107,0,0.8);
+    border-color: #fff;
 }
 
 /* ===== КНОПКА ЗАМЕРА ===== */
