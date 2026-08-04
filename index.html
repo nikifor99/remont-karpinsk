@@ -10,19 +10,10 @@
 </head>
 <body>
 
-    <!-- Прелоадер при загрузке -->
-    <div class="preloader" id="preloader">
-        <div class="preloader-content">
-            <div class="spinner"></div>
-            <div class="countdown" id="countdown">3</div>
-            <p>ЗАГРУЗКА...</p>
-        </div>
-    </div>
-
-    <!-- Эффект фонового свечения -->
+    <!-- Эффект фонового свечения за курсором -->
     <div class="cursor-glow" id="cursor-glow"></div>
 
-    <!-- Внешняя обертка карточки -->
+    <!-- Внешняя обертка карточки (авто-кручение настроено в CSS) -->
     <div class="card-wrapper" id="card">
         <div class="container">
             
@@ -31,12 +22,12 @@
                 <h1>Ремонт Карпинск</h1>
             </div>
 
-            <!-- Блок видео-слайдера -->
+            <!-- Блок видео-слайдера с БЕГУЩИМ ОГОНЬКОМ -->
             <div class="slider-wrapper">
                 <div class="slider-container">
                     <div class="services-slider">
                         
-                        <!-- Слайд с видео (надпись удалена, добавлена кнопка звука) -->
+                        <!-- Слайд с видео и аккуратной SVG-кнопкой -->
                         <div class="slide active">
                             <div class="video-wrapper">
                                 <video id="card-video" autoplay loop playsinline muted>
@@ -45,8 +36,14 @@
                                 </video>
                             </div>
                             
-                            <!-- Кнопка включения/выключения звука в углу экрана -->
-                            <button id="mute-btn" class="mute-button">🔇</button>
+                            <!-- Аккуратная тонкая кнопка звука -->
+                            <button id="mute-btn" class="mute-button" aria-label="Включить звук">
+                                <svg id="mute-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                                </svg>
+                            </button>
                         </div>
 
                     </div>
@@ -79,43 +76,37 @@
 
     <!-- Логика работы страницы -->
     <script>
-        // Управление прелоадером
-        const preloader = document.getElementById('preloader');
-        const countdownEl = document.getElementById('countdown');
-        let count = 3;
-
-        const timer = setInterval(() => {
-            count--;
-            if (count > 0) {
-                countdownEl.textContent = count;
-            } else {
-                clearInterval(timer);
-                preloader.style.opacity = '0';
-                setTimeout(() => {
-                    preloader.style.display = 'none';
-                }, 500);
-            }
-        }, 600);
-
-        // Движение фонового свечения за курсором
+        // 1. Движение фонового свечения за курсором
         const glow = document.getElementById('cursor-glow');
         document.addEventListener('mousemove', (e) => {
             glow.style.left = e.clientX + 'px';
             glow.style.top = e.clientY + 'px';
         });
 
-        // Управление звуком видео
+        // 2. Управление звуком видео через SVG-иконки
         const video = document.getElementById('card-video');
         const muteBtn = document.getElementById('mute-btn');
+        const muteSvg = document.getElementById('mute-svg');
 
-        if (video && muteBtn) {
-            muteBtn.addEventListener('click', () => {
+        if (video && muteBtn && muteSvg) {
+            muteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
                 if (video.muted) {
                     video.muted = false;
-                    muteBtn.textContent = '🔊';
+                    muteSvg.innerHTML = `
+                        <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                    `;
+                    muteBtn.setAttribute('aria-label', 'Выключить звук');
                 } else {
                     video.muted = true;
-                    muteBtn.textContent = '🔇';
+                    muteSvg.innerHTML = `
+                        <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                    `;
+                    muteBtn.setAttribute('aria-label', 'Включить звук');
                 }
             });
         }
