@@ -1,9 +1,9 @@
 :root {
-    --primary: #ff6b00; /* Трендовый неоново-оранжевый */
-    --bg-dark: #0f1115; /* Глубокий премиальный темный */
-    --card-bg: #161920; /* Цвет самой карточки */
-    --text-white: #f8fafc; /* Чистый белый для контраста */
-    --text-gray: #94a3b8; /* Спокойный серый */
+    --primary: #ff6b00;
+    --bg-dark: #0f1115;
+    --card-bg: #161920;
+    --text-white: #f8fafc;
+    --text-gray: #94a3b8;
 }
 
 * {
@@ -29,7 +29,51 @@ body {
     padding: 2rem 0;
 }
 
-/* Интерактивный свет на фоне */
+/* ===== ПРЕЛОАДЕР ===== */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0f1115;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+}
+.preloader-content {
+    text-align: center;
+}
+.spinner {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 20px;
+    border: 4px solid rgba(255,107,0,0.1);
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+.countdown {
+    font-size: 4rem;
+    font-weight: 700;
+    font-family: 'Oswald', sans-serif;
+    color: var(--primary);
+    text-shadow: 0 0 30px rgba(255,107,0,0.5);
+    line-height: 1;
+    margin-bottom: 10px;
+}
+.preloader-content p {
+    font-size: 1rem;
+    opacity: 0.6;
+    letter-spacing: 2px;
+}
+
+/* ===== ФОНОВЫЙ СВЕТ ===== */
 .cursor-glow {
     position: fixed;
     width: 600px;
@@ -41,26 +85,26 @@ body {
     z-index: 1;
 }
 
-/* Внешняя обертка всей карточки */
+/* ===== КАРТОЧКА ===== */
 .card-wrapper {
     position: relative;
     max-width: 450px;
     width: calc(100% - 2rem);
     margin: auto;
-    padding: 2px; /* Толщина внешнего бегающего контура */
+    padding: 2px;
     border-radius: 26px;
     overflow: hidden;
     z-index: 2;
     transform-style: preserve-3d;
     transform: perspective(1000px);
-    transition: transform 0.1s ease-out;
+    transition: transform 0.1s ease-out, opacity 0.8s ease;
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 
                 0 0 40px rgba(255, 107, 0, 0.25), 
                 0 0 80px rgba(255, 107, 0, 0.1);
 }
-
-/* Эффект бегающего огонька по контуру всей карточки и рамок */
-.card-wrapper::before, .header-wrapper::before, .slider-wrapper::before {
+.card-wrapper::before,
+.header-wrapper::before,
+.slider-wrapper::before {
     content: '';
     position: absolute;
     top: -50%;
@@ -80,11 +124,9 @@ body {
     z-index: 1;
     will-change: transform;
 }
-
 .header-wrapper::before { animation-duration: 3s; }
 .slider-wrapper::before { animation-duration: 3.5s; }
 
-/* Сама карточка внутри светящейся обертки */
 .container {
     position: relative;
     z-index: 2;
@@ -98,8 +140,8 @@ body {
     align-items: center;
 }
 
-/* Рамки вокруг заголовка и слайдера */
-.header-wrapper, .slider-wrapper {
+.header-wrapper,
+.slider-wrapper {
     width: 100%;
     margin-bottom: 2rem;
     text-align: center;
@@ -108,11 +150,11 @@ body {
     border-radius: 12px;
     overflow: hidden;
 }
-
 .header-wrapper { transform: translateZ(30px); }
-.slider-wrapper { transform: translateZ(25px); margin-bottom: 1.8rem; } 
+.slider-wrapper { transform: translateZ(25px); margin-bottom: 1.8rem; }
 
-.header-wrapper::after, .slider-wrapper::after {
+.header-wrapper::after,
+.slider-wrapper::after {
     content: '';
     position: absolute;
     inset: 2px;
@@ -125,7 +167,6 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* Переливающийся текст заголовка */
 h1 {
     font-family: 'Oswald', sans-serif;
     font-size: 2.1rem;
@@ -143,13 +184,11 @@ h1 {
     text-align: center;
     animation: textShimmer 4s linear infinite;
 }
-
 @keyframes textShimmer {
     0% { background-position: 0% 50%; }
     100% { background-position: 300% 50%; }
 }
 
-/* Контейнер внутренностей слайдера */
 .slider-container {
     position: relative;
     z-index: 3;
@@ -163,7 +202,7 @@ h1 {
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: 220px; 
+    height: 220px;
     border-radius: 6px;
 }
 
@@ -178,112 +217,103 @@ h1 {
     transform: scale(0.98);
     transition: opacity 0.35s ease-in-out, transform 0.35s ease-in-out;
 }
-
 .slide.active {
     position: relative;
     display: block;
 }
 
-/* Контейнер сравнения картинок */
-.image-compare {
+/* ===== ВИДЕО-ОБЁРТКА ===== */
+.video-wrapper {
     position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
+    border-radius: 6px;
+    background: #000;
 }
-
-.image-compare img {
-    position: absolute;
-    top: 0;
-    width: 50%;
+.video-wrapper video {
+    width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
-.img-before { left: 0; border-right: 1px solid rgba(255,255,255,0.1); }
-.img-after { right: 0; }
-
-/* Бегающие ярлыки До / После */
-.compare-badge {
-    position: absolute;
-    bottom: 8px;
-    padding: 3px 8px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    border-radius: 4px;
-    background: rgba(0, 0, 0, 0.75);
-    color: var(--text-white);
-    z-index: 5;
-    border: 1px solid rgba(255, 107, 0, 0.3);
-}
-
-.compare-badge.before { left: 8px; }
-.compare-badge.after { right: 8px; }
-
-/* Центральная неоновая нить */
-.compare-line {
+/* Таймер 3,2,1 */
+.video-timer {
     position: absolute;
     top: 0;
-    left: 50%;
-    width: 2px;
-    height: 100%;
-    background-color: #ffffff;
-    transform: translateX(-50%);
-    z-index: 4;
-    animation: lineNeon 2s infinite alternate ease-in-out;
-}
-
-@keyframes lineNeon {
-    0% { box-shadow: 0 0 4px #ffffff, 0 0 10px var(--primary); }
-    100% { box-shadow: 0 0 12px #ffffff, 0 0 25px var(--primary); }
-}
-
-/* Элементы управления слайдером */
-.slider-controls {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 1rem;
+    left: 0;
     width: 100%;
-}
-
-.nav-btn {
-    background: rgba(255, 107, 0, 0.05);
-    border: 1px solid rgba(255, 107, 0, 0.2);
-    border-radius: 50%;
-    width: 28px;
-    height: 28px;
-    display: flex;
+    height: 100%;
+    display: none;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    transition: background 0.2s;
+    font-family: 'Oswald', sans-serif;
+    font-size: 6rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0 0 40px rgba(255,107,0,0.8), 0 0 80px rgba(255,107,0,0.5);
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(2px);
+    z-index: 10;
+    pointer-events: none;
+    animation: timerPulse 0.8s ease-in-out infinite alternate;
+}
+@keyframes timerPulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.1); opacity: 1; }
 }
 
-.nav-btn svg { width: 16px; height: 16px; fill: rgba(248, 250, 252, 0.6); }
-.nav-btn:hover { background: var(--primary); border-color: var(--primary); }
-.nav-btn:hover svg { fill: #000000; }
-
-.slider-dots { display: flex; gap: 8px; align-items: center; }
-
-.dot {
-    width: 7px;
-    height: 7px;
-    background: rgba(255, 107, 0, 0.2);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: width 0.3s ease, background 0.3s ease;
+/* Надпись "Наши работы" */
+.video-label {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.7);
+    text-shadow: 0 0 20px rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.4);
+    padding: 4px 14px;
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+    z-index: 5;
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
-.dot.active {
-    width: 16px; 
-    border-radius: 6px;
+/* Кнопка "Нажмите для воспроизведения" */
+.play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    display: none;
+    background: rgba(0,0,0,0.7);
+    border: 2px solid rgba(255,107,0,0.8);
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    border-radius: 40px;
+    cursor: pointer;
+    box-shadow: 0 0 30px rgba(255,107,0,0.4);
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    letter-spacing: 1px;
+}
+.play-btn:hover {
+    transform: translate(-50%, -50%) scale(1.05);
     background: var(--primary);
-    box-shadow: 0 0 8px rgba(255, 107, 0, 0.6);
+    color: #000;
+    box-shadow: 0 0 50px rgba(255,107,0,0.8);
 }
 
-/* Обертка для кнопки замера */
+/* ===== КНОПКА ЗАМЕРА ===== */
 .btn-wrapper {
     transform: translateZ(40px);
     position: relative;
@@ -291,8 +321,6 @@ h1 {
     width: 100%;
     margin-bottom: 1.5rem;
 }
-
-/* Пульсирующая оранжевая кнопка */
 .btn {
     display: flex;
     align-items: center;
@@ -316,7 +344,6 @@ h1 {
     animation: buttonPulse 2s infinite alternate ease-in-out;
     transition: color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
-
 .btn svg {
     width: 16px;
     height: 16px;
@@ -326,31 +353,27 @@ h1 {
     vertical-align: middle;
     animation: phoneWobble 2.5s infinite ease-in-out;
 }
-
 .btn span { display: inline-block; vertical-align: middle; }
 
 @keyframes buttonPulse {
     0% { box-shadow: 0 0 15px rgba(255, 107, 0, 0.3), 0 0 30px rgba(255, 107, 0, 0.15), inset 0 0 8px rgba(255, 107, 0, 0.2); }
     100% { box-shadow: 0 0 35px rgba(255, 107, 0, 0.8), 0 0 70px rgba(255, 107, 0, 0.4), inset 0 0 16px rgba(255, 107, 0, 0.4); }
 }
-
 @keyframes phoneWobble {
     0%, 100% { transform: rotate(0deg); }
     25% { transform: rotate(-8deg); }
     75% { transform: rotate(8deg); }
 }
-
 .btn:hover {
     color: #000000;
     background-color: var(--primary);
     animation: none;
     box-shadow: 0 0 45px rgba(255, 107, 0, 0.9), 0 0 90px rgba(255, 107, 0, 0.5);
 }
-
 .btn:hover svg { animation: none; transform: scale(1.1) rotate(-15deg); }
 .btn:active { transform: scale(0.97); }
 
-/* СТИЛИ НЕОНОВОЙ БЕГУЩЕЙ СТРОКИ */
+/* ===== БЕГУЩАЯ СТРОКА ===== */
 .ticker-wrapper {
     width: 100%;
     overflow: hidden;
@@ -362,12 +385,10 @@ h1 {
     transform: translateZ(15px);
     box-shadow: inset 0 0 10px rgba(255, 107, 0, 0.05);
 }
-
 .ticker-content {
     display: flex;
     white-space: nowrap;
 }
-
 .ticker-content span {
     display: inline-block;
     font-size: 0.85rem;
@@ -375,15 +396,15 @@ h1 {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: var(--text-white);
-    text-shadow: 0 0 6px rgba(255, 107, 0, 0.4); /* Мягкое неоновое свечение букв */
-    animation: tickerLoop 25s linear infinite; /* Плавное бесконечное движение */
+    text-shadow: 0 0 6px rgba(255, 107, 0, 0.4);
+    animation: tickerLoop 25s linear infinite;
 }
-
 @keyframes tickerLoop {
     0% { transform: translate3d(0, 0, 0); }
     100% { transform: translate3d(-100%, 0, 0); }
 }
 
+/* ===== ПРИМЕЧАНИЕ ===== */
 .notice {
     font-size: 0.8rem;
     color: var(--text-gray);
