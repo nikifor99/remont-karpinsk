@@ -65,7 +65,7 @@ body {
     100% { transform: perspective(1000px) rotateX(-3deg) rotateY(4deg); }
 }
 
-/* Общая анимация вращения огоньков */
+/* Анимация вращения огоньков */
 .card-wrapper::before,
 .header-wrapper::before,
 .slider-wrapper::before {
@@ -89,7 +89,7 @@ body {
     will-change: transform;
 }
 .header-wrapper::before { animation-duration: 3s; }
-.slider-wrapper::before { animation-duration: 5s; } /* Скорость огонька вокруг видео */
+.slider-wrapper::before { animation-duration: 5s; }
 
 .container {
     position: relative;
@@ -124,20 +124,19 @@ body {
     z-index: 2;
 }
 
-/* ===== ВОЗВРАЩЕН БЕГУЩИЙ ОГОНЕК ДЛЯ ВИДЕО ===== */
+/* Бегущий огонек для видео */
 .slider-wrapper {
     width: 100%;
     margin-bottom: 1.8rem;
     text-align: center;
     position: relative;
-    padding: 2px; /* Толщина бегущего огонька */
+    padding: 2px; 
     border-radius: 14px;
     overflow: hidden;
     transform: translateZ(25px);
     box-shadow: 0 0 25px rgba(255, 107, 0, 0.2);
 }
 
-/* Подложка под слайдер, которая перекрывает центр градиента */
 .slider-wrapper::after {
     content: '';
     position: absolute;
@@ -175,7 +174,7 @@ h1 {
 
 .slider-container {
     position: relative;
-    z-index: 3; /* Видео поверх внутренней подложки */
+    z-index: 3;
     background: #0f1115;
     width: 100%;
     border-radius: 12px;
@@ -221,7 +220,7 @@ h1 {
     display: block;
 }
 
-/* Утонченная и аккуратная SVG-кнопка звука */
+/* SVG-кнопка звука */
 .mute-button {
     position: absolute;
     top: 12px;
@@ -241,13 +240,10 @@ h1 {
     backdrop-filter: blur(6px);
     padding: 0;
 }
-
 .mute-button svg {
     width: 16px;
     height: 16px;
-    transition: transform 0.2s ease;
 }
-
 .mute-button:hover {
     transform: scale(1.08);
     background: var(--primary);
@@ -256,11 +252,7 @@ h1 {
     box-shadow: 0 0 15px var(--primary);
 }
 
-.mute-button:active {
-    transform: scale(0.95);
-}
-
-/* ===== КНОПКА ЗАМЕРА ===== */
+/* ===== КНОПКА ЗАМЕРА С ЭФФЕКТОМ ПЕЧАТИ ===== */
 .btn-wrapper {
     transform: translateZ(40px);
     position: relative;
@@ -272,55 +264,78 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 12px;
     width: 100%;
     background: transparent;
     color: var(--text-white);
-    padding: 0.75rem;
+    padding: 0.85rem;
     text-decoration: none;
     font-family: 'Oswald', sans-serif;
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: 1rem;
     text-transform: uppercase;
     border: 2px solid var(--primary);
     border-radius: 10px;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     position: relative;
     z-index: 20;
     text-align: center;
+    overflow: hidden;
     animation: buttonPulse 2s infinite alternate ease-in-out;
     transition: color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 .btn svg {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     fill: currentColor;
     flex-shrink: 0;
-    display: inline-block;
-    vertical-align: middle;
     animation: phoneWobble 2.5s infinite ease-in-out;
 }
-.btn span { display: inline-block; vertical-align: middle; }
+
+/* ЭФФЕКТ НАБОРА ТЕКСТА (Эффект печати букв по кругу) */
+.typing-text {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid var(--primary); /* Курсор печати */
+    width: 0;
+    animation: typeLetters 5s steps(17) infinite, blinkCursor 0.7s step-end infinite;
+}
+
+@keyframes typeLetters {
+    0%, 10% { width: 0; }
+    40%, 70% { width: 100%; } /* Текст полностью набрался и замер */
+    90%, 100% { width: 0; } /* Текст стёрся обратно */
+}
+@keyframes blinkCursor {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--primary); }
+}
 
 @keyframes buttonPulse {
-    0% { box-shadow: 0 0 15px rgba(255, 107, 0, 0.3), 0 0 30px rgba(255, 107, 0, 0.15), inset 0 0 8px rgba(255, 107, 0, 0.2); }
-    100% { box-shadow: 0 0 35px rgba(255, 107, 0, 0.8), 0 0 70px rgba(255, 107, 0, 0.4), inset 0 0 16px rgba(255, 107, 0, 0.4); }
+    0% { box-shadow: 0 0 15px rgba(255, 107, 0, 0.3), inset 0 0 8px rgba(255, 107, 0, 0.2); }
+    100% { box-shadow: 0 0 35px rgba(255, 107, 0, 0.7), inset 0 0 16px rgba(255, 107, 0, 0.4); }
 }
 @keyframes phoneWobble {
     0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(-8deg); }
-    75% { transform: rotate(8deg); }
+    25% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
 }
 .btn:hover {
     color: #000000;
     background-color: var(--primary);
     animation: none;
-    box-shadow: 0 0 45px rgba(255, 107, 0, 0.9), 0 0 90px rgba(255, 107, 0, 0.5);
+    box-shadow: 0 0 45px rgba(255, 107, 0, 0.9);
+}
+.btn:hover .typing-text {
+    animation: none; /* При наведении текст перестает стираться */
+    width: 100%;
+    border-color: transparent;
 }
 .btn:hover svg { animation: none; transform: scale(1.1) rotate(-15deg); }
 .btn:active { transform: scale(0.97); }
 
-/* ===== БЕКУЩАЯ СТРОКА ===== */
+/* ===== БЕГУЩАЯ СТРОКА ===== */
 .ticker-wrapper {
     width: 100%;
     overflow: hidden;
