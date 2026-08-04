@@ -1,95 +1,74 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ремонт Карпинск — Наши Работы</title>
-    <!-- Подключение шрифтов -->
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Oswald:wght@700&family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Подключение стилей -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Интерактивный живой огонек на фоне -->
+    <!-- ПРЕЛОАДЕР 5 СЕКУНД -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <div class="spinner"></div>
+            <div class="countdown" id="countdown">5</div>
+            <p>Загрузка...</p>
+        </div>
+    </div>
+
+    <!-- ФОНОВЫЙ ОГОНЁК -->
     <div class="cursor-glow"></div>
 
-    <!-- Внешняя обертка всей карточки с эффектом 3D-параллакса -->
+    <!-- КАРТОЧКА -->
     <div class="card-wrapper" id="card">
         <div class="container">
-            
-            <!-- Заголовок в рамке с бегающим бликом -->
+
             <div class="header-wrapper">
                 <h1>Ремонт Карпинск</h1>
             </div>
 
-            <!-- Блок интерактивного слайдера -->
+            <!-- СЛАЙДЕР С ВИДЕО -->
             <div class="slider-wrapper">
                 <div class="slider-container">
-                    
-                    <!-- Зона картинок (3 слайда) -->
                     <div class="services-slider">
-                        <!-- Слайд 1 -->
+                        <!-- Единственный слайд (активный) -->
                         <div class="slide active">
-                            <div class="image-compare">
-                                <img src="before1.jpg" alt="До" class="img-before">
-                                <img src="after1.jpg" alt="После" class="img-after">
-                                <div class="compare-badge before">До</div>
-                                <div class="compare-badge after">После</div>
-                                <div class="compare-line"></div>
-                            </div>
-                        </div>
+                            <div class="video-wrapper">
+                                <!-- Видео с атрибутами для автоплея -->
+                                <video id="promo-video" loop playsinline muted>
+                                    <source src="remont-karpinsk.mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает видео-тег.
+                                </video>
 
-                        <!-- Слайд 2 -->
-                        <div class="slide">
-                            <div class="image-compare">
-                                <img src="before2.jpg" alt="До" class="img-before">
-                                <img src="after2.jpg" alt="После" class="img-after">
-                                <div class="compare-badge before">До</div>
-                                <div class="compare-badge after">После</div>
-                                <div class="compare-line"></div>
-                            </div>
-                        </div>
+                                <!-- Таймер 3,2,1 (стилизован в CSS) -->
+                                <div class="video-timer" id="video-timer">3</div>
 
-                        <!-- Слайд 3 -->
-                        <div class="slide">
-                            <div class="image-compare">
-                                <img src="before3.jpg" alt="До" class="img-before">
-                                <img src="after3.jpg" alt="После" class="img-after">
-                                <div class="compare-badge before">До</div>
-                                <div class="compare-badge after">После</div>
-                                <div class="compare-line"></div>
+                                <!-- Надпись "Наши работы" (стилизована в CSS) -->
+                                <div class="video-label">Наши работы</div>
+
+                                <!-- Кнопка для запуска видео (изначально видима) -->
+                                <button class="play-btn" id="video-play-btn">Нажмите для воспроизведения</button>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Элементы управления -->
-                    <div class="slider-controls">
-                        <button class="nav-btn prev" id="prevBtn" aria-label="Назад">
-                            <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-                        </button>
-                        <div class="slider-dots" id="dotsContainer"></div>
-                        <button class="nav-btn next" id="nextBtn" aria-label="Вперед">
-                            <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-                        </button>
-                    </div>
-
+                    <!-- Управление слайдером скрыто (один слайд) -->
+                    <div class="slider-controls" style="display:none;"></div>
                 </div>
             </div>
 
-            <!-- Обертка для кнопки замера с вашим номером -->
+            <!-- КНОПКА ЗАМЕРА -->
             <div class="btn-wrapper">
                 <a href="tel:+79826260959" class="btn">
-                    <svg viewBox="0 0 24 24" xmlns="http://w3.org">
-                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                    </svg>
+                    <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
                     <span>Вызвать на замер</span>
                 </a>
             </div>
 
-            <!-- НЕОНОВАЯ БЕГУЩАЯ СТРОКА С ВИДАМИ РАБОТ -->
+            <!-- БЕГУЩАЯ СТРОКА -->
             <div class="ticker-wrapper">
                 <div class="ticker-content">
                     <span>Малярные работы • Укладка ламината • Линолеум • Гипсокартон • Монтаж панелей ПВХ / МДФ • Разводка проводки • Демонтаж •&nbsp;</span>
@@ -97,7 +76,6 @@
                 </div>
             </div>
 
-            <!-- Примечание -->
             <div class="notice">
                 Точная стоимость работ утверждается после бесплатного осмотра объекта и составления сметы.
             </div>
@@ -105,108 +83,126 @@
         </div>
     </div>
 
-    <!-- Интерактивные скрипты -->
     <script>
-        // 1. Управление фоновым огоньком
+        // ===== 1. ПРЕЛОАДЕР (5 сек) =====
+        let count = 5;
+        const countdownEl = document.getElementById('countdown');
+        const preloader = document.getElementById('preloader');
+        const card = document.getElementById('card');
+
+        card.style.opacity = '0';
+
+        const preloaderInterval = setInterval(() => {
+            count -= 1;
+            if (count > 0) {
+                countdownEl.textContent = count;
+            } else {
+                clearInterval(preloaderInterval);
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                    card.style.opacity = '1';
+                    // После прелоадера даём пользователю увидеть кнопку (никаких авто-запусков)
+                }, 500);
+            }
+        }, 1000);
+
+        // ===== 2. УПРАВЛЕНИЕ ВИДЕО (с таймером 3,2,1) =====
+        document.addEventListener("DOMContentLoaded", () => {
+            const video = document.getElementById("promo-video");
+            const playBtn = document.getElementById("video-play-btn");
+            const timerEl = document.getElementById("video-timer");
+
+            if (!video || !playBtn || !timerEl) return;
+
+            let countdownInterval;
+
+            // Функция запуска обратного отсчета 3, 2, 1
+            function startVideoWithCountdown() {
+                playBtn.style.display = "none";
+                timerEl.style.display = "flex";
+                
+                let timeLeft = 3;
+                timerEl.textContent = timeLeft;
+
+                countdownInterval = setInterval(() => {
+                    timeLeft--;
+                    if (timeLeft > 0) {
+                        timerEl.textContent = timeLeft;
+                    } else {
+                        clearInterval(countdownInterval);
+                        timerEl.style.display = "none";
+                        
+                        // Включаем звук и запускаем плеер
+                        video.muted = false; 
+                        video.play().catch(error => {
+                            console.log("Автоплей со звуком заблокирован, запускаем без звука:", error);
+                            video.muted = true;
+                            video.play();
+                        });
+                    }
+                }, 800); // 800ms соответствует пульсации в CSS
+            }
+
+            // Обработка клика на кнопку "Нажмите для воспроизведения"
+            playBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                startVideoWithCountdown();
+            });
+
+            // Пауза / Воспроизведение по клику на само видео (после старта)
+            video.addEventListener("click", () => {
+                if (timerEl.style.display === "flex") return; // Игнорируем клики во время отсчета
+
+                if (video.paused) {
+                    video.play();
+                    playBtn.style.display = "none";
+                } else {
+                    video.pause();
+                    playBtn.style.display = "block"; // Показываем кнопку на паузе
+                }
+            });
+
+            // Умная пауза: останавливаем видео, если карточку скрыли или пролистали
+            if (window.IntersectionObserver) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (!entry.isIntersecting && !video.paused) {
+                            video.pause();
+                            playBtn.style.display = "block";
+                            clearInterval(countdownInterval);
+                            timerEl.style.display = "none";
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                observer.observe(video);
+            }
+        });
+
+        // ===== 3. 3D-ПАРАЛЛАКС =====
+        const cardElement = document.getElementById('card');
+        window.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.clientX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.clientY) / 25;
+            cardElement.style.transform = `perspective(1000px) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+        window.addEventListener('mouseleave', () => {
+            cardElement.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)';
+        });
+
+        // ===== 4. ФОНОВЫЙ ОГОНЁК =====
         const glow = document.querySelector('.cursor-glow');
         window.addEventListener('mousemove', (e) => {
             glow.style.left = e.clientX + 'px';
             glow.style.top = e.clientY + 'px';
         });
         window.addEventListener('touchmove', (e) => {
-            if(e.touches.length > 0) {
-                glow.style.left = e.touches.clientX + 'px';
-                glow.style.top = e.touches.clientY + 'px';
+            if (e.touches.length > 0) {
+                glow.style.left = e.touches[0].clientX + 'px';
+                glow.style.top = e.touches[0].clientY + 'px';
             }
         });
-
-        // 2. 3D-параллакс эффект для всей карточки
-        const card = document.getElementById('card');
-        window.addEventListener('mousemove', (e) => {
-            const xAxis = (window.innerWidth / 2 - e.clientX) / 25;
-            const yAxis = (window.innerHeight / 2 - e.clientY) / 25;
-            card.style.transform = `perspective(1000px) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-        });
-        window.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)';
-        });
-
-        // 3. Работа автослайдера картинок
-        const slides = document.querySelectorAll('.slide');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const dotsContainer = document.getElementById('dotsContainer');
-        let currentSlide = 0;
-        let isTransitioning = false;
-        let autoPlayTimer;
-
-        slides.forEach((_, index) => {
-            const dot = document.createElement('div');
-            dot.classList.add('dot');
-            if (index === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => {
-                if (index !== currentSlide && !isTransitioning) {
-                    updateSlider(index);
-                    resetAutoPlay();
-                }
-            });
-            dotsContainer.appendChild(dot);
-        });
-
-        const dots = document.querySelectorAll('.dot');
-
-        function updateSlider(index) {
-            if (isTransitioning) return;
-            isTransitioning = true;
-
-            const currentImg = slides[currentSlide];
-            const nextImg = slides[index];
-
-            currentImg.style.opacity = '0';
-            currentImg.style.transform = 'scale(0.97)';
-            dots[currentSlide].classList.remove('active');
-
-            setTimeout(() => {
-                currentImg.classList.remove('active');
-                currentSlide = index;
-                nextImg.classList.add('active');
-                dots[currentSlide].classList.add('active');
-
-                requestAnimationFrame(() => {
-                    setTimeout(() => {
-                        nextImg.style.opacity = '1';
-                        nextImg.style.transform = 'scale(1)';
-                        isTransitioning = false;
-                    }, 40);
-                });
-            }, 300); 
-        }
-
-        function nextSlide() {
-            if (isTransitioning) return;
-            let index = (currentSlide + 1) % slides.length;
-            updateSlider(index);
-        }
-
-        function prevSlide() {
-            if (isTransitioning) return;
-            let index = (currentSlide - 1 + slides.length) % slides.length;
-            updateSlider(index);
-        }
-
-        function startAutoPlay() {
-            autoPlayTimer = setInterval(nextSlide, 7000); 
-        }
-
-        function resetAutoPlay() {
-            clearInterval(autoPlayTimer);
-            startAutoPlay();
-        }
-
-        prevBtn.addEventListener('click', () => { prevSlide(); resetAutoPlay(); });
-        nextBtn.addEventListener('click', () => { nextSlide(); resetAutoPlay(); });
-
-        startAutoPlay();
     </script>
 </body>
 </html>
